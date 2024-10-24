@@ -2,9 +2,9 @@
 
 Facts:
 * root POM defines depMgt for level5 1.0.2
-* level2 POM defines depMgt for level3, level4 and level5
+* level2 POM defines depMgt for level3=1.0.1, level4=1.0.1 and level5=1.0.1
 * without transitive manager (Maven3) all we see is root POM depMgt is applied (level5 = 1.0.2)
-* with transitive manager (Maven4) we should see level3 unchanged (as level2 should not apply own depMgt onto itself), level4 managed, and level5 managed by root (1.0.2 and not 1.0.1)
+* with transitive manager (Maven4) we should see level3 unchanged 1.0.0 (as level2 should not apply own depMgt onto its own dependencies), level4 managed to 1.0.1, and level5 managed by root to 1.0.2 (and not 1.0.1)
 
 Command to run:
 
@@ -34,7 +34,7 @@ OS name: "linux", version: "6.11.4-201.fc40.x86_64", arch: "amd64", family: "uni
 [INFO]    \- org.apache.maven.it.mresolver614:level2:jar:1.0.0:compile
 [INFO]       \- org.apache.maven.it.mresolver614:level3:jar:1.0.0:compile
 [INFO]          \- org.apache.maven.it.mresolver614:level4:jar:1.0.0:compile
-[INFO]             \- org.apache.maven.it.mresolver614:level5:jar:1.0.1:compile
+[INFO]             \- org.apache.maven.it.mresolver614:level5:jar:1.0.2:compile
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
@@ -69,7 +69,7 @@ OS name: "linux", version: "6.11.4-201.fc40.x86_64", arch: "amd64", family: "uni
 [INFO]    \- org.apache.maven.it.mresolver614:level2:jar:1.0.0:compile
 [INFO]       \- org.apache.maven.it.mresolver614:level3:jar:1.0.1:compile
 [INFO]          \- org.apache.maven.it.mresolver614:level4:jar:1.0.1:compile
-[INFO]             \- org.apache.maven.it.mresolver614:level5:jar:1.0.1:compile
+[INFO]             \- org.apache.maven.it.mresolver614:level5:jar:1.0.2:compile
 [INFO] --------------------------------------------------------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] --------------------------------------------------------------------------------------------------------------------------
