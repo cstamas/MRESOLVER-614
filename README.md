@@ -93,3 +93,38 @@ The **expected** output is:
 [INFO]         ╰─org.apache.maven.it.mresolver614:level5:jar:1.0.2 [compile] (version managed from 1.0.0) == by level1 to 1.0.2 and level2 to 1.0.1 but level1 wins (closer to root)
 [INFO]           ╰─org.apache.maven.it.mresolver614:level6:jar:1.0.2 [compile] (version managed from 1.0.0) == by root to 1.0.2 and level1 to 1.0.1 but root wins (closer to root)
 ```
+
+Maven 4.0.0-SNAPSHOT + Resolver [2.0.3-SNAPSHOT](https://github.com/apache/maven-resolver/pull/588) output **is expected output**:
+```
+$ ~/Tools/maven/apache-maven-4.0.0-beta-6-SNAPSHOT/bin/mvn -V eu.maveniverse.maven.plugins:toolbox:tree -Dmaven.repo.local.tail=local-repo -Dmaven.repo.local.tail.ignoreAvailability
+Apache Maven 4.0.0-beta-6-SNAPSHOT (cf94fba0151ff403763bdf23eb73fe74b3d0874d)
+Maven home: /home/cstamas/Tools/maven/apache-maven-4.0.0-beta-6-SNAPSHOT
+Java version: 21.0.4, vendor: Eclipse Adoptium, runtime: /home/cstamas/.sdkman/candidates/java/21.0.4-tem
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "6.11.4-201.fc40.x86_64", arch: "amd64", family: "unix"
+[WARNING] Unable to find the root directory. Create a .mvn directory in the root directory or add the root="true" attribute on the root project's model to identify it.
+[WARNING] Legacy/insecurely encrypted password detected for server my-legacy-server
+[WARNING] Legacy/insecurely encrypted password detected for server my-legacy-broken-server
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------------------------< org.apache.maven.it.mresolver614:root >-----------------------------------------
+[INFO] Building root 1.0.0
+[INFO]   from pom.xml
+[INFO] ---------------------------------------------------------[ jar ]----------------------------------------------------------
+[INFO] 
+[INFO] --- toolbox:0.3.5:tree (default-cli) @ root ---
+[INFO] org.apache.maven.it.mresolver614:root:jar:1.0.0
+[INFO] ╰─org.apache.maven.it.mresolver614:level1:jar:1.0.0 [compile]
+[INFO]   ╰─org.apache.maven.it.mresolver614:level2:jar:1.0.0 [compile]
+[INFO]     ╰─org.apache.maven.it.mresolver614:level3:jar:1.0.0 [compile]
+[INFO]       ╰─org.apache.maven.it.mresolver614:level4:jar:1.0.1 [compile] (version managed from 1.0.0)
+[INFO]         ╰─org.apache.maven.it.mresolver614:level5:jar:1.0.2 [compile] (version managed from 1.0.0)
+[INFO]           ╰─org.apache.maven.it.mresolver614:level6:jar:1.0.2 [compile] (version managed from 1.0.0)
+[INFO] --------------------------------------------------------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] --------------------------------------------------------------------------------------------------------------------------
+[INFO] Total time:  0.312 s
+[INFO] Finished at: 2024-10-24T21:11:21+02:00
+[INFO] --------------------------------------------------------------------------------------------------------------------------
+$ 
+```
