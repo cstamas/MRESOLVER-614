@@ -7,12 +7,4 @@
     <groupId>org.apache.maven.it.mresolver614</groupId>
     <artifactId>level5</artifactId>
     <version>1.0.2</version>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven.it.mresolver614</groupId>
-            <artifactId>level6</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
 </project>

@@ -9,13 +9,13 @@ Facts:
 Command to run:
 
 ```
-mvn dependency:tree -Dmaven.repo.local.tail=local-repo -Dmaven.repo.local.tail.ignoreAvailability
+mvn eu.maveniverse.maven.plugins:toolbox:tree -Dmaven.repo.local.tail=local-repo -Dmaven.repo.local.tail.ignoreAvailability
 ```
 
 Example output with 3.9.9: Maven 3 is not transitive regarding dependency management, and it shows 1.0.0 all way down
 except for level5 that has applies depMgt from root.
 ```
-$ mvn -V dependency:tree -Dmaven.repo.local.tail=local-repo -Dmaven.repo.local.tail.ignoreAvailability
+$ mvn -V eu.maveniverse.maven.plugins:toolbox:tree -Dmaven.repo.local.tail=local-repo -Dmaven.repo.local.tail.ignoreAvailability
 Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
 Maven home: /home/cstamas/.sdkman/candidates/maven/3.9.9
 Java version: 21.0.4, vendor: Eclipse Adoptium, runtime: /home/cstamas/.sdkman/candidates/java/21.0.4-tem
@@ -28,26 +28,27 @@ OS name: "linux", version: "6.11.4-201.fc40.x86_64", arch: "amd64", family: "uni
 [INFO]   from pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- dependency:3.7.0:tree (default-cli) @ root ---
+[INFO] --- toolbox:0.3.5:tree (default-cli) @ root ---
 [INFO] org.apache.maven.it.mresolver614:root:jar:1.0.0
-[INFO] \- org.apache.maven.it.mresolver614:level1:jar:1.0.0:compile
-[INFO]    \- org.apache.maven.it.mresolver614:level2:jar:1.0.0:compile
-[INFO]       \- org.apache.maven.it.mresolver614:level3:jar:1.0.0:compile
-[INFO]          \- org.apache.maven.it.mresolver614:level4:jar:1.0.0:compile
-[INFO]             \- org.apache.maven.it.mresolver614:level5:jar:1.0.2:compile
+[INFO] ╰─org.apache.maven.it.mresolver614:level1:jar:1.0.0 [compile]
+[INFO]   ╰─org.apache.maven.it.mresolver614:level2:jar:1.0.0 [compile]
+[INFO]     ╰─org.apache.maven.it.mresolver614:level3:jar:1.0.0 [compile]
+[INFO]       ╰─org.apache.maven.it.mresolver614:level4:jar:1.0.0 [compile]
+[INFO]         ╰─org.apache.maven.it.mresolver614:level5:jar:1.0.0 [compile]
+[INFO]           ╰─org.apache.maven.it.mresolver614:level6:jar:1.0.2 [compile] (version managed from 1.0.0)
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  0.386 s
-[INFO] Finished at: 2024-10-24T18:57:44+02:00
+[INFO] Total time:  0.192 s
+[INFO] Finished at: 2024-10-24T19:20:39+02:00
 [INFO] ------------------------------------------------------------------------
-$
+$ 
 ```
 
 Example output with 4.0.0-beta-5: this version is transitive but broken, it applies level2 depMgt onto it's own
 dependencies.
 ```
-$ mvn -V dependency:tree -Dmaven.repo.local.tail=local-repo -Dmaven.repo.local.tail.ignoreAvailability
+$ mvn -V eu.maveniverse.maven.plugins:toolbox:tree -Dmaven.repo.local.tail=local-repo -Dmaven.repo.local.tail.ignoreAvailability
 Apache Maven 4.0.0-beta-5 (6e78fcf6f5e76422c0eb358cd11f0c231ecafbad)
 Maven home: /home/cstamas/.sdkman/candidates/maven/4.0.0-beta-5
 Java version: 21.0.4, vendor: Eclipse Adoptium, runtime: /home/cstamas/.sdkman/candidates/java/21.0.4-tem
@@ -63,18 +64,31 @@ OS name: "linux", version: "6.11.4-201.fc40.x86_64", arch: "amd64", family: "uni
 [INFO]   from pom.xml
 [INFO] ---------------------------------------------------------[ jar ]----------------------------------------------------------
 [INFO] 
-[INFO] --- dependency:3.8.0:tree (default-cli) @ root ---
+[INFO] --- toolbox:0.3.5:tree (default-cli) @ root ---
 [INFO] org.apache.maven.it.mresolver614:root:jar:1.0.0
-[INFO] \- org.apache.maven.it.mresolver614:level1:jar:1.0.0:compile
-[INFO]    \- org.apache.maven.it.mresolver614:level2:jar:1.0.0:compile
-[INFO]       \- org.apache.maven.it.mresolver614:level3:jar:1.0.1:compile
-[INFO]          \- org.apache.maven.it.mresolver614:level4:jar:1.0.1:compile
-[INFO]             \- org.apache.maven.it.mresolver614:level5:jar:1.0.2:compile
+[INFO] ╰─org.apache.maven.it.mresolver614:level1:jar:1.0.0 [compile]
+[INFO]   ╰─org.apache.maven.it.mresolver614:level2:jar:1.0.0 [compile]
+[INFO]     ╰─org.apache.maven.it.mresolver614:level3:jar:1.0.1 [compile] (version managed from 1.0.0)
+[INFO]       ╰─org.apache.maven.it.mresolver614:level4:jar:1.0.1 [compile] (version managed from 1.0.0)
+[INFO]         ╰─org.apache.maven.it.mresolver614:level5:jar:1.0.2 [compile] (version managed from 1.0.0)
+[INFO]           ╰─org.apache.maven.it.mresolver614:level6:jar:1.0.2 [compile] (version managed from 1.0.0)
 [INFO] --------------------------------------------------------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] --------------------------------------------------------------------------------------------------------------------------
-[INFO] Total time:  0.451 s
-[INFO] Finished at: 2024-10-24T18:56:36+02:00
+[INFO] Total time:  0.285 s
+[INFO] Finished at: 2024-10-24T19:21:10+02:00
 [INFO] --------------------------------------------------------------------------------------------------------------------------
-$
+$ 
+```
+
+The **expected** output is:
+```
+[INFO] --- toolbox:0.3.5:tree (default-cli) @ root ---
+[INFO] org.apache.maven.it.mresolver614:root:jar:1.0.0
+[INFO] ╰─org.apache.maven.it.mresolver614:level1:jar:1.0.0 [compile]
+[INFO]   ╰─org.apache.maven.it.mresolver614:level2:jar:1.0.0 [compile]
+[INFO]     ╰─org.apache.maven.it.mresolver614:level3:jar:1.0.0 [compile] == unmanaged, level2 depends on level3:1.0.0
+[INFO]       ╰─org.apache.maven.it.mresolver614:level4:jar:1.0.1 [compile] (version managed from 1.0.0) == by level2
+[INFO]         ╰─org.apache.maven.it.mresolver614:level5:jar:1.0.2 [compile] (version managed from 1.0.0) == by level1 to 1.0.2 and level2 to 1.0.1 but level1 wins (closer to root)
+[INFO]           ╰─org.apache.maven.it.mresolver614:level6:jar:1.0.2 [compile] (version managed from 1.0.0) == by root to 1.0.2
 ```
