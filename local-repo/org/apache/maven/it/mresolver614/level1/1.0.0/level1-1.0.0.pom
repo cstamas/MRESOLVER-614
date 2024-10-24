@@ -15,6 +15,11 @@
                 <artifactId>level5</artifactId>
                 <version>1.0.2</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.maven.it.mresolver614</groupId>
+                <artifactId>level6</artifactId>
+                <version>1.0.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
