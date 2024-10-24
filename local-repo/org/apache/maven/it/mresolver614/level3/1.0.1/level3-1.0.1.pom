@@ -6,7 +6,7 @@
 
     <groupId>org.apache.maven.it.mresolver614</groupId>
     <artifactId>level3</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <dependencies>
         <dependency>
